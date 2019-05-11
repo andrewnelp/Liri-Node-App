@@ -1,0 +1,26 @@
+{
+  "name": "Liri-Node-App",
+  "version": "1.0.0",
+  "description": "Node js app using axios and Spotify, Bands in Town and OMDB APIs",
+  "main": "liri.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewnelp/Liri-Node-App.git"
+  },
+  "keywords": [],
+  "author": "Andrey Nelepov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewnelp/Liri-Node-App/issues"
+  },
+  "homepage": "https://github.com/andrewnelp/Liri-Node-App#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^8.0.0",
+    "moment": "^2.24.0",
+    "spotify": "^0.3.0"
+  }
+}
