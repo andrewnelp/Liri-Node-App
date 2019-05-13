@@ -2,18 +2,16 @@ require("dotenv").config();
 const keys = require("./keys.js");
 let inquirer = require("inquirer");
 let moment = require("moment");
+let fs = require("fs");
 moment().format();
 let axios = require("axios");
 var Spotify = require('node-spotify-api');
 let spotify = new Spotify(keys.spotify);
-// var spotify = new Spotify({
-//   id: 40dc70b0ddd94326b30d458d87bb0ffc,
-//   secret: c2f7e0f876834aefa76afe4fafab4af2
-// });
-      
-      //calling the name of the user
-      inquirer
-        .prompt([
+
+
+//calling the name of the user
+inquirer
+  .prompt([
     {
       type: "input",
       message: "What is your name?",
@@ -22,7 +20,7 @@ let spotify = new Spotify(keys.spotify);
     {
       type: "list",
       message: "What would you like to ask about: concerts, spotify songs, movies?",
-      choices: ["concert-this", "spotify-this-song", "movie-this"],
+      choices: ["concert-this", "spotify-this-song", "movie-this", "do-what-it-says"],
       name: "choice"
     },
   ])
@@ -63,7 +61,7 @@ let spotify = new Spotify(keys.spotify);
       console.log("\n=================");
       console.log("\nWelcome " + res.username);
       console.log("\n=================");
-      //asking about movie
+      //asking about Spotify
       inquirer
         .prompt([
           {
@@ -73,16 +71,52 @@ let spotify = new Spotify(keys.spotify);
           }
         ])
         .then(function (result) {
-          spotify.search({ type: 'track', query: result.track }, function (err, data) {
-            if (err) {
-              console.log('Error occurred: ' + err);
-              return;
-            }
-            console.log(result.data)
-          });
+          spotify
+            .search({ type: 'track', query: result.track })
+            .then(function (response) {
+              console.log("\n=================");
+              for (let i = 0; i < response.tracks.items.length; i++) {
+                console.log("\n=================");
+                console.log("Song: " + response.tracks.items[i].name);
+                console.log("Artist: " + response.tracks.items[i].album.artists[0].name);
+                console.log("Spotify Preview: " + response.tracks.items[i].album.external_urls.spotify);
+                console.log("Album: " + response.tracks.items[i].album.name);
+                console.log("Release Year: " + response.tracks.items[i].album.release_date);
+                console.log("Preview: " + response.tracks.items[i].preview_url);
+                console.log("\n=================");
+              }
+
+            })
+            .catch(function (err) {
+              console.log(err);
+            });
         })
-      // OMDB movie-this
-    } else if (res.choice === "movie-this") {
+      //Do what it says
+    } else if (res.choice === "do-what-it-says") {
+      fs.readFile("random.txt", "utf8", function (error, data) {
+        // If the code experiences any errors it will log the error to the console.
+        if (error) {
+          return console.log(error);
+        }
+        spotify
+          .search({ type: 'track', query: data })
+          .then(function (response) {
+            console.log("\n=================");
+            for (let i = 0; i < response.tracks.items.length; i++) {
+              console.log("\n=================");
+              console.log("Song: " + response.tracks.items[i].name);
+              console.log("Artist: " + response.tracks.items[i].album.artists[0].name);
+              console.log("Spotify Preview: " + response.tracks.items[i].album.external_urls.spotify);
+              console.log("Album: " + response.tracks.items[i].album.name);
+              console.log("Release Year: " + response.tracks.items[i].album.release_date);
+              console.log("Preview: " + response.tracks.items[i].preview_url);
+              console.log("\n=================");
+            }
+          })
+      })
+    }
+    // OMDB movie-this
+    else if (res.choice === "movie-this") {
       console.log("\n=================");
       console.log("\nWelcome " + res.username);
       console.log("\n=================");
@@ -97,39 +131,46 @@ let spotify = new Spotify(keys.spotify);
         ]).then(function (result) {
           //if a user enters nothing then Mr Nobody
           if (result.movie == "") {
+            // result.movie = "Mr.Nobody";
+            // console.log(result.movie);
+            // ombdMovie();
             axios.get("http://www.omdbapi.com/?t=Mr.Nobody&y=&plot=short&apikey=trilogy").then(
               function (response) {
-                  console.log("\n=================");
-                  console.log("Title: " + response.data.Title);
-                  console.log("Year: " + response.data.Year);
-                  console.log("IMBD Rating: " + response.data.imdbRating);
-                  console.log("Country: " + response.data.Country);
-                  console.log("Language: " + response.data.Language);
-                  console.log("Actors: " + response.data.Actors);
-                  console.log("Plot: " + response.data.Plot);
-                  console.log("\n=================");
+                console.log("\n=================");
+                console.log("Title: " + response.data.Title);
+                console.log("Year: " + response.data.Year);
+                console.log("IMBD Rating: " + response.data.imdbRating);
+                console.log("Country: " + response.data.Country);
+                console.log("Language: " + response.data.Language);
+                console.log("Actors: " + response.data.Actors);
+                console.log("Plot: " + response.data.Plot);
+                console.log("\n=================");
               })
-          } 
+          }
           else {
-            axios.get("http://www.omdbapi.com/?t=" + result.movie + "&y=&plot=short&apikey=trilogy").then(
-              function (response) {
-                // if Error
-                if (response.data.Error) {
-                  console.log('Movie not found!');
-                }
-                //if movie found
-                else if (result.movie) {
-                  console.log("\n=================");
-                  console.log("Title: " + response.data.Title);
-                  console.log("Year: " + response.data.Year);
-                  console.log("IMBD Rating: " + response.data.imdbRating);
-                  console.log("Country: " + response.data.Country);
-                  console.log("Language: " + response.data.Language);
-                  console.log("Actors: " + response.data.Actors);
-                  console.log("Plot: " + response.data.Plot);
-                  console.log("\n=================");
-                }
-              })
+            let ombdMovie = function () {
+              axios.get("http://www.omdbapi.com/?t=" + result.movie + "&y=&plot=short&apikey=trilogy").then(
+                function (response) {
+                  // if Error
+                  if (response.data.Error) {
+                    console.log('Movie not found!');
+                  }
+                  //if movie found
+                  else if (result.movie) {
+                    console.log("\n=================");
+                    console.log("Title: " + response.data.Title);
+                    console.log("Year: " + response.data.Year);
+                    console.log("IMBD Rating: " + response.data.imdbRating);
+                    console.log("Country: " + response.data.Country);
+                    console.log("Language: " + response.data.Language);
+                    console.log("Actors: " + response.data.Actors);
+                    console.log("Plot: " + response.data.Plot);
+                    console.log("\n=================");
+                  }
+                })
+            }
+            ombdMovie();
+
           }
 
         })
