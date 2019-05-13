@@ -9,6 +9,7 @@ var Spotify = require('node-spotify-api');
 let spotify = new Spotify(keys.spotify);
 
 
+
 //calling the name of the user
 inquirer
   .prompt([
@@ -28,7 +29,7 @@ inquirer
   .then(function (res) {
     if (res.choice === "concert-this") {
       console.log("\n=================");
-      console.log("\nWelcome " + res.username);
+      console.log(`\nWelcome ${res.username}`);
       console.log("\n=================");
       //asking about an artist
       inquirer
@@ -50,16 +51,16 @@ inquirer
                 //converting date with moment()
                 let date = moment(response.data[i].datetime).format('MM/DD/YYYY')
                 console.log("\n=================");
-                console.log("Venue name: " + response.data[i].venue.name);
-                console.log("Country: " + response.data[i].venue.country);
-                console.log("Date: " + date);
+                console.log(`Venue name:  ${response.data[i].venue.name}`);
+                console.log(`Country:  ${response.data[i].venue.country}`);
+                console.log(`Date:  ${date}`);
                 console.log("=================");
               }
             })
         })
     } else if (res.choice === "spotify-this-song") {
       console.log("\n=================");
-      console.log("\nWelcome " + res.username);
+      console.log(`\nWelcome ${res.username}`);
       console.log("\n=================");
       //asking about Spotify
       inquirer
@@ -71,18 +72,21 @@ inquirer
           }
         ])
         .then(function (result) {
+          
+          
           spotify
             .search({ type: 'track', query: result.track })
             .then(function (response) {
+              
               console.log("\n=================");
               for (let i = 0; i < response.tracks.items.length; i++) {
                 console.log("\n=================");
-                console.log("Song: " + response.tracks.items[i].name);
-                console.log("Artist: " + response.tracks.items[i].album.artists[0].name);
-                console.log("Spotify Preview: " + response.tracks.items[i].album.external_urls.spotify);
-                console.log("Album: " + response.tracks.items[i].album.name);
-                console.log("Release Year: " + response.tracks.items[i].album.release_date);
-                console.log("Preview: " + response.tracks.items[i].preview_url);
+                console.log(`Song:  ${response.tracks.items[i].name}`);
+                console.log(`Artist: ${response.tracks.items[i].album.artists[0].name}`);
+                console.log(`Spotify Preview: ${response.tracks.items[i].album.external_urls.spotify}`);
+                console.log(`Album: ${response.tracks.items[i].album.name}`);
+                console.log(`Release Year: ${response.tracks.items[i].album.release_date}`);
+                console.log(`Preview: ${response.tracks.items[i].preview_url}`);
                 console.log("\n=================");
               }
 
@@ -93,6 +97,8 @@ inquirer
         })
       //Do what it says
     } else if (res.choice === "do-what-it-says") {
+      // let stuff = require("./stuff");
+      // stuff.spotifyTrack();
       fs.readFile("random.txt", "utf8", function (error, data) {
         // If the code experiences any errors it will log the error to the console.
         if (error) {
@@ -104,12 +110,12 @@ inquirer
             console.log("\n=================");
             for (let i = 0; i < response.tracks.items.length; i++) {
               console.log("\n=================");
-              console.log("Song: " + response.tracks.items[i].name);
-              console.log("Artist: " + response.tracks.items[i].album.artists[0].name);
-              console.log("Spotify Preview: " + response.tracks.items[i].album.external_urls.spotify);
-              console.log("Album: " + response.tracks.items[i].album.name);
-              console.log("Release Year: " + response.tracks.items[i].album.release_date);
-              console.log("Preview: " + response.tracks.items[i].preview_url);
+              console.log(`Song:  ${response.tracks.items[i].name}`);
+              console.log(`Artist: ${response.tracks.items[i].album.artists[0].name}`);
+              console.log(`Spotify Preview: ${response.tracks.items[i].album.external_urls.spotify}`);
+              console.log(`Album: ${response.tracks.items[i].album.name}`);
+              console.log(`Release Year: ${response.tracks.items[i].album.release_date}`);
+              console.log(`Preview: ${response.tracks.items[i].preview_url}`);
               console.log("\n=================");
             }
           })
@@ -118,7 +124,7 @@ inquirer
     // OMDB movie-this
     else if (res.choice === "movie-this") {
       console.log("\n=================");
-      console.log("\nWelcome " + res.username);
+      console.log(`\nWelcome ${res.username}`);
       console.log("\n=================");
       //asking about movie
       inquirer
@@ -137,18 +143,18 @@ inquirer
             axios.get("http://www.omdbapi.com/?t=Mr.Nobody&y=&plot=short&apikey=trilogy").then(
               function (response) {
                 console.log("\n=================");
-                console.log("Title: " + response.data.Title);
-                console.log("Year: " + response.data.Year);
-                console.log("IMBD Rating: " + response.data.imdbRating);
-                console.log("Country: " + response.data.Country);
-                console.log("Language: " + response.data.Language);
-                console.log("Actors: " + response.data.Actors);
-                console.log("Plot: " + response.data.Plot);
+                console.log(`Title: ${response.data.Title}`);
+                console.log(`Year: ${response.data.Year}`);
+                console.log(`IMBD Rating: ${response.data.imdbRating}`);
+                console.log(`Country: ${response.data.Country}`);
+                console.log(`Language: ${response.data.Language}`);
+                console.log(`Actors: ${response.data.Actors}`);
+                console.log(`Plot: ${response.data.Plot}`);
                 console.log("\n=================");
               })
           }
           else {
-            let ombdMovie = function () {
+            let ombdMovie = function(){
               axios.get("http://www.omdbapi.com/?t=" + result.movie + "&y=&plot=short&apikey=trilogy").then(
                 function (response) {
                   // if Error
@@ -158,19 +164,19 @@ inquirer
                   //if movie found
                   else if (result.movie) {
                     console.log("\n=================");
-                    console.log("Title: " + response.data.Title);
-                    console.log("Year: " + response.data.Year);
-                    console.log("IMBD Rating: " + response.data.imdbRating);
-                    console.log("Country: " + response.data.Country);
-                    console.log("Language: " + response.data.Language);
-                    console.log("Actors: " + response.data.Actors);
-                    console.log("Plot: " + response.data.Plot);
+                    console.log(`Title: ${response.data.Title}`);
+                    console.log(`Year: ${response.data.Year}`);
+                    console.log(`IMBD Rating: ${response.data.imdbRating}`);
+                    console.log(`Country: ${response.data.Country}`);
+                    console.log(`Language: ${response.data.Language}`);
+                    console.log(`Actors: ${response.data.Actors}`);
+                    console.log(`Plot: ${response.data.Plot}`);
                     console.log("\n=================");
                   }
                 })
             }
             ombdMovie();
-
+            
           }
 
         })
