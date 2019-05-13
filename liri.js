@@ -84,36 +84,41 @@ inquirer
           }
         ])
         .then(function (result) {
-          spotify
+          if(result.track == "") {
+            console.log("PLEASE ENTER A SONG!");
+          } else {
+            spotify
             .search({ type: 'track', query: result.track })
-            .then(function (response) {
-            
-              console.log("\n=================");
-              for (let i = 0; i < response.tracks.items.length; i++) {
+              .then(function (response) {
+
                 console.log("\n=================");
-                console.log(`Song:  ${response.tracks.items[i].name}`);
-                console.log(`Artist: ${response.tracks.items[i].album.artists[0].name}`);
-                console.log(`Spotify Preview: ${response.tracks.items[i].album.external_urls.spotify}`);
-                console.log(`Album: ${response.tracks.items[i].album.name}`);
-                console.log(`Release Year: ${response.tracks.items[i].album.release_date}`);
-                console.log(`Preview: ${response.tracks.items[i].preview_url}`);
-                console.log("\n=================");
-              }
-              //appending song to log.txt
-              fs.appendFile("log.txt", `\nSong: ${result.track}`, function (err) {
-                // If an error was experienced we will log it.
-                if (err) {
-                  console.log(err);
+                for (let i = 0; i < response.tracks.items.length; i++) {
+                  console.log("\n=================");
+                  console.log(`Song:  ${response.tracks.items[i].name}`);
+                  console.log(`Artist: ${response.tracks.items[i].album.artists[0].name}`);
+                  console.log(`Spotify Preview: ${response.tracks.items[i].album.external_urls.spotify}`);
+                  console.log(`Album: ${response.tracks.items[i].album.name}`);
+                  console.log(`Release Year: ${response.tracks.items[i].album.release_date}`);
+                  console.log(`Preview: ${response.tracks.items[i].preview_url}`);
+                  console.log("\n=================");
                 }
-                // If no error is experienced, we'll log the phrase "Content Added" to our node console.
-                else {
-                  console.log(`Song ${result.track.toUpperCase()} added to log.txt file !`);
-                }
+                //appending song to log.txt
+                fs.appendFile("log.txt", `\nSong: ${result.track}`, function (err) {
+                  // If an error was experienced we will log it.
+                  if (err) {
+                    console.log(err);
+                  }
+                  // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+                  else {
+                    console.log(`Song ${result.track.toUpperCase()} added to log.txt file !`);
+                  }
+                });
+              })
+              .catch(function (err) {
+                console.log(err);
               });
-            })
-            .catch(function (err) {
-              console.log(err);
-            });
+          }
+          
         })
       //Do what it says
     } else if (res.choice === "do-what-it-says") {
@@ -184,7 +189,7 @@ inquirer
                 console.log("\n=================");
               })
             //appending Mr/Nobody to log file
-            fs.appendFile("log.txt", `\n ${'Mr.Nobody'}`, function (err) {
+            fs.appendFile("log.txt", `\nMovie: ${'Mr.Nobody'}`, function (err) {
 
               // If an error was experienced we will log it.
               if (err) {
