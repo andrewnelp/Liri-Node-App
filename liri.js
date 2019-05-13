@@ -7,6 +7,7 @@ moment().format();
 let axios = require("axios");
 var Spotify = require('node-spotify-api');
 let spotify = new Spotify(keys.spotify);
+let stuff = require("./stuff")
 
 
 
@@ -56,6 +57,17 @@ inquirer
                 console.log(`Date:  ${date}`);
                 console.log("=================");
               }
+              //appending artist to log.txt
+              fs.appendFile("log.txt", `\nSong: ${artist}`, function (err) {
+                // If an error was experienced we will log it.
+                if (err) {
+                  console.log(err);
+                }
+                // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+                else {
+                  console.log(`Artist ${artist.toUpperCase()} added to log.txt file !`);
+                }
+              });
             })
         })
     } else if (res.choice === "spotify-this-song") {
@@ -72,12 +84,10 @@ inquirer
           }
         ])
         .then(function (result) {
-          
-          
           spotify
             .search({ type: 'track', query: result.track })
             .then(function (response) {
-              
+            
               console.log("\n=================");
               for (let i = 0; i < response.tracks.items.length; i++) {
                 console.log("\n=================");
@@ -89,7 +99,17 @@ inquirer
                 console.log(`Preview: ${response.tracks.items[i].preview_url}`);
                 console.log("\n=================");
               }
-
+              //appending song to log.txt
+              fs.appendFile("log.txt", `\nSong: ${result.track}`, function (err) {
+                // If an error was experienced we will log it.
+                if (err) {
+                  console.log(err);
+                }
+                // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+                else {
+                  console.log(`Song ${result.track.toUpperCase()} added to log.txt file !`);
+                }
+              });
             })
             .catch(function (err) {
               console.log(err);
@@ -97,8 +117,6 @@ inquirer
         })
       //Do what it says
     } else if (res.choice === "do-what-it-says") {
-      // let stuff = require("./stuff");
-      // stuff.spotifyTrack();
       fs.readFile("random.txt", "utf8", function (error, data) {
         // If the code experiences any errors it will log the error to the console.
         if (error) {
@@ -118,8 +136,21 @@ inquirer
               console.log(`Preview: ${response.tracks.items[i].preview_url}`);
               console.log("\n=================");
             }
+             //appending movies to log file
+        fs.appendFile("log.txt", `\nSong: ${data}`, function (err) {
+          // If an error was experienced we will log it.
+          if (err) {
+            console.log(err);
+          }
+          // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+          else {
+            console.log(`Song ${data.toUpperCase()} Added to log.txt file !`);
+          }
+        });
           })
+       
       })
+  
     }
     // OMDB movie-this
     else if (res.choice === "movie-this") {
@@ -152,6 +183,20 @@ inquirer
                 console.log(`Plot: ${response.data.Plot}`);
                 console.log("\n=================");
               })
+            //appending Mr/Nobody to log file
+            fs.appendFile("log.txt", `\n ${'Mr.Nobody'}`, function (err) {
+
+              // If an error was experienced we will log it.
+              if (err) {
+                console.log(err);
+              }
+
+              // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+              else {
+                console.log(`Movie ${'Mr.Nobody'} Added to log.txt file!`);
+              }
+
+            });
           }
           else {
             let ombdMovie = function(){
@@ -176,6 +221,20 @@ inquirer
                 })
             }
             ombdMovie();
+            //appending movies to log file
+            fs.appendFile("log.txt", `\nMovie: ${result.movie}`, function (err) {
+
+              // If an error was experienced we will log it.
+              if (err) {
+                console.log(err);
+              }
+
+              // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+              else {
+                console.log(`Movie ${result.movie.toUpperCase()} Added to log.txt file !`);
+              }
+
+            });
             
           }
 
