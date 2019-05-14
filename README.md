@@ -27,8 +27,12 @@ Node.js project uses the following APIs
    * Plot of the movie.
    * Actors in the movie.
    If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody
-   
+
 All artists, movies and songs are stored in log.txt file
+
+The choice do-what-it-says uses the fs Node package. LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
+
+It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt
 
 ## Getting Started
 
