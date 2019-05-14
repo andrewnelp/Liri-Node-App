@@ -27,7 +27,7 @@ Things installed:
 
 ## Authors
 
-* **Andrey Nelepov** - *all the work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Andrey Nelepov** - *all the work* - [andrewnelp](https://github.com/andrewnelp)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
