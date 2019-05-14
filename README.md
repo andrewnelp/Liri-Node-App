@@ -2,13 +2,13 @@
 
 Node.js project uses the following APIs
 
-* Bands In Town
+**Bands In Town**
     This will show the following information about the song in your terminal/bash window:
    * Name of the venue
    * Venue location
    * Date of the Event (as "MM/DD/YYYY")
 
-* Spotify
+**Spotify**
     This will show the following information about the song in your terminal/bash window:
    * Artist(s)
    * The song's name
@@ -16,7 +16,7 @@ Node.js project uses the following APIs
    * The album that the song is from
    If no song is provided then the program will default to "The Sign" by Ace of Base.
 
-* OMBD movie database
+**OMBD movie database**
     Shows the following information about the movie in the terminal:
    * Title of the movie.
    * Year the movie came out.
@@ -26,17 +26,17 @@ Node.js project uses the following APIs
    * Language of the movie.
    * Plot of the movie.
    * Actors in the movie.
-   If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody
+If the user doesn't type a movie in, the program will output data for the movie **Mr. Nobody**
 
-All artists, movies and songs are stored in log.txt file
+All artists, movies and songs are stored in **log.txt** file
 
-The choice do-what-it-says uses the fs Node package. LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
+The choice **do-what-it-says** uses the fs Node package. LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
 
-It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt
+It should run spotify-this-song for "I Want it That Way," as follows the text in **random.txt**
 
 ## Getting Started
 
-Run node liri and follow the choices
+Run **node liri** and follow the choices
 
 ### Prerequisites
 
