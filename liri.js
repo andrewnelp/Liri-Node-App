@@ -85,7 +85,37 @@ inquirer
         ])
         .then(function (result) {
           if(result.track == "") {
-            console.log("PLEASE ENTER A SONG!");
+            result.track = "The Sign";
+            spotify
+              .search({ type: 'track', query: result.track })
+              .then(function (response) {
+
+                console.log("\n=================");
+                // for (let i = 0; i < response.tracks.items.length; i++) {
+                  console.log("\n=================");
+                  console.log(`Song:  ${response.tracks.items[7].name}`);
+                  console.log(`Artist: ${response.tracks.items[7].album.artists[0].name}`);
+                  console.log(`Spotify Preview: ${response.tracks.items[7].album.external_urls.spotify}`);
+                  console.log(`Album: ${response.tracks.items[7].album.name}`);
+                  console.log(`Release Year: ${response.tracks.items[7].album.release_date}`);
+                  console.log(`Preview: ${response.tracks.items[7].preview_url}`);
+                  console.log("\n=================");
+                // }
+                //appending song to log.txt
+                fs.appendFile("log.txt", `\nSong: ${result.track}`, function (err) {
+                  // If an error was experienced we will log it.
+                  if (err) {
+                    console.log(err);
+                  }
+                  // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+                  else {
+                    console.log(`Song ${result.track.toUpperCase()} added to log.txt file !`);
+                  }
+                });
+              })
+              .catch(function (err) {
+                console.log(err);
+              });
           } else {
             spotify
             .search({ type: 'track', query: result.track })
