@@ -14,7 +14,7 @@ Run node liri and follow the choices
 Things installed:
 * dotenv npm mpdule
 * inquirer npm module
-* moment js npm module
+* moment npm module
 * fs npm module
 * axios npm module
 * node-spotify-api
@@ -23,13 +23,11 @@ Things installed:
 
 ## How the app works video
 
-
+* 
 
 ## Authors
 
 * **Andrey Nelepov** - *all the work* - [andrewnelp](https://github.com/andrewnelp)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
