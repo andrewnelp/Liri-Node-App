@@ -1,4 +1,4 @@
-# Project Title
+# Liri Node.js App
 
 Node.js project uses the following APIs
 * Bands In Town
@@ -11,7 +11,7 @@ Run node liri and follow the choices
 
 ### Prerequisites
 
-Things installed:
+Packages installed:
 * dotenv npm mpdule
 * inquirer npm module
 * moment npm module
