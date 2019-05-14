@@ -2,13 +2,12 @@ require("dotenv").config();
 const keys = require("./keys.js");
 let inquirer = require("inquirer");
 let moment = require("moment");
-let fs = require("fs");
 moment().format();
+let fs = require("fs");
 let axios = require("axios");
 var Spotify = require('node-spotify-api');
 let spotify = new Spotify(keys.spotify);
-let stuff = require("./stuff")
-
+// let stuff = require("./stuff")
 
 
 //calling the name of the user
@@ -58,7 +57,7 @@ inquirer
                 console.log("=================");
               }
               //appending artist to log.txt
-              fs.appendFile("log.txt", `\nSong: ${artist}`, function (err) {
+              fs.appendFile("log.txt", `\nArtist: ${artist}`, function (err) {
                 // If an error was experienced we will log it.
                 if (err) {
                   console.log(err);
@@ -84,23 +83,21 @@ inquirer
           }
         ])
         .then(function (result) {
-          if(result.track == "") {
+          if (result.track == "") {
             result.track = "The Sign";
             spotify
               .search({ type: 'track', query: result.track })
               .then(function (response) {
 
                 console.log("\n=================");
-                // for (let i = 0; i < response.tracks.items.length; i++) {
-                  console.log("\n=================");
-                  console.log(`Song:  ${response.tracks.items[7].name}`);
-                  console.log(`Artist: ${response.tracks.items[7].album.artists[0].name}`);
-                  console.log(`Spotify Preview: ${response.tracks.items[7].album.external_urls.spotify}`);
-                  console.log(`Album: ${response.tracks.items[7].album.name}`);
-                  console.log(`Release Year: ${response.tracks.items[7].album.release_date}`);
-                  console.log(`Preview: ${response.tracks.items[7].preview_url}`);
-                  console.log("\n=================");
-                // }
+                console.log("\n=================");
+                console.log(`Song:  ${response.tracks.items[7].name}`);
+                console.log(`Artist: ${response.tracks.items[7].album.artists[0].name}`);
+                console.log(`Spotify Preview: ${response.tracks.items[7].album.external_urls.spotify}`);
+                console.log(`Album: ${response.tracks.items[7].album.name}`);
+                console.log(`Release Year: ${response.tracks.items[7].album.release_date}`);
+                console.log(`Preview: ${response.tracks.items[7].preview_url}`);
+                console.log("\n=================");
                 //appending song to log.txt
                 fs.appendFile("log.txt", `\nSong: ${result.track}`, function (err) {
                   // If an error was experienced we will log it.
@@ -118,7 +115,7 @@ inquirer
               });
           } else {
             spotify
-            .search({ type: 'track', query: result.track })
+              .search({ type: 'track', query: result.track })
               .then(function (response) {
 
                 console.log("\n=================");
@@ -148,7 +145,7 @@ inquirer
                 console.log(err);
               });
           }
-          
+
         })
       //Do what it says
     } else if (res.choice === "do-what-it-says") {
@@ -171,21 +168,21 @@ inquirer
               console.log(`Preview: ${response.tracks.items[i].preview_url}`);
               console.log("\n=================");
             }
-             //appending movies to log file
-        fs.appendFile("log.txt", `\nSong: ${data}`, function (err) {
-          // If an error was experienced we will log it.
-          if (err) {
-            console.log(err);
-          }
-          // If no error is experienced, we'll log the phrase "Content Added" to our node console.
-          else {
-            console.log(`Song ${data.toUpperCase()} Added to log.txt file !`);
-          }
-        });
+            //appending movies to log file
+            fs.appendFile("log.txt", `\nSong: ${data}`, function (err) {
+              // If an error was experienced we will log it.
+              if (err) {
+                console.log(err);
+              }
+              // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+              else {
+                console.log(`Song ${data.toUpperCase()} Added to log.txt file !`);
+              }
+            });
           })
-       
+
       })
-  
+
     }
     // OMDB movie-this
     else if (res.choice === "movie-this") {
@@ -234,7 +231,7 @@ inquirer
             });
           }
           else {
-            let ombdMovie = function(){
+            let ombdMovie = function () {
               axios.get("http://www.omdbapi.com/?t=" + result.movie + "&y=&plot=short&apikey=trilogy").then(
                 function (response) {
                   // if Error
@@ -268,11 +265,8 @@ inquirer
               else {
                 console.log(`Movie ${result.movie.toUpperCase()} Added to log.txt file !`);
               }
-
             });
-            
           }
-
         })
     }
   })
