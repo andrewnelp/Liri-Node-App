@@ -44,30 +44,35 @@ inquirer
           //calling Bands in Town api
           let queryUrl = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
           //getting results from API
-          axios.get(queryUrl).then(
-            function (response) {
-              //looping through resonse data info
-              for (let i = 0; i < response.data.length; i++) {
-                //converting date with moment()
-                let date = moment(response.data[i].datetime).format('MM/DD/YYYY')
-                console.log("\n=================");
-                console.log(`Venue name:  ${response.data[i].venue.name}`);
-                console.log(`Country:  ${response.data[i].venue.country}`);
-                console.log(`Date:  ${date}`);
-                console.log("=================");
-              }
-              //appending artist to log.txt
-              fs.appendFile("log.txt", `\nArtist: ${artist}`, function (err) {
-                // If an error was experienced we will log it.
-                if (err) {
-                  console.log(err);
+          if(result.artist == ""){
+            console.log("Please, enter an artist");
+          } else {
+            axios.get(queryUrl).then(
+              function (response) {
+                //looping through resonse data info
+                for (let i = 0; i < response.data.length; i++) {
+                  //converting date with moment()
+                  let date = moment(response.data[i].datetime).format('MM/DD/YYYY')
+                  console.log("\n=================");
+                  console.log(`Venue name:  ${response.data[i].venue.name}`);
+                  console.log(`Country:  ${response.data[i].venue.country}`);
+                  console.log(`Date:  ${date}`);
+                  console.log("=================");
                 }
-                // If no error is experienced, we'll log the phrase "Content Added" to our node console.
-                else {
-                  console.log(`Artist ${artist.toUpperCase()} added to log.txt file !`);
-                }
-              });
-            })
+                //appending artist to log.txt
+                fs.appendFile("log.txt", `\nArtist: ${artist}`, function (err) {
+                  // If an error was experienced we will log it.
+                  if (err) {
+                    console.log(err);
+                  }
+                  // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+                  else {
+                    console.log(`Artist ${artist.toUpperCase()} added to log.txt file !`);
+                  }
+                });
+              })
+          }
+      
         })
     } else if (res.choice === "spotify-this-song") {
       console.log("\n=================");

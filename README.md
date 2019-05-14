@@ -52,7 +52,7 @@ Packages installed:
 
 ## How the app works video
 
-* 
+* https://youtu.be/Q7Mz8AvjHcg
 
 ## Authors
 
